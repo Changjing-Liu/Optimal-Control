@@ -18,8 +18,17 @@
 ## Dynamics Review
 ## Dynamics Discretization and Stability
 To Transform from continuity to discretization, some methods are following:
-### Forward Euler: add energy
-### Backward Euler: add dampping
+### Forward Euler(Emplicit): add energy.
+### Backward Euler(Impicit): add dampping, use in game and physical simulation.
+### Points
+
+- Impilicit methods are often "more" stable than explicit counterparts
+- For forward simulation, solving implicit equation can be more expensive
+- In many "direct" traj opt methods, they're not any more expensive to use
+
+### Discretization Controls
+- focuse on discretization x(t) and u(t)
+
 ## Collinear Points
 ## 8 Puzzle
 ## Kd-Trees
