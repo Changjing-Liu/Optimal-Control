@@ -1,8 +1,8 @@
 # Optimal-Control
 > These are solution for the algorithm course of Princeton
 ## Table of Contents
-* [Percolation](#percolation)
-* [Deques and Randomized Queues](#deques-and-randomized-queues)
+* [Dynamics Review](#dynamics-review)
+* [Dynamics Discretization and Stability](#dynamics-discretization-and-stability)
 * [Collinear Points](#collinear-points)
 * [8 Puzzle](#8-puzzle)
 * [Kd-Trees](#kd-trees)
@@ -15,8 +15,11 @@
 <!-- * [License](#license) -->
 
 
-## Percolation
-## Deques and Randomized Queues
+## Dynamics Review
+## Dynamics Discretization and Stability
+To Transform from continuity to discretization, some methods are following:
+### Forward Euler: add energy
+### Backward Euler: add dampping
 ## Collinear Points
 ## 8 Puzzle
 ## Kd-Trees
