@@ -64,6 +64,9 @@ Newton is a local root-finding method. Will converge to the cloest min, max or s
 
 sufficient conditions
 
+### 4. Regularization
+fix the decent, go downhill
+
 ## 8 Puzzle
 ## Kd-Trees
 ## WordNet
