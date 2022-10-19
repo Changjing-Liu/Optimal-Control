@@ -3,7 +3,7 @@
 ## Table of Contents
 * [Dynamics Review](#dynamics-review)
 * [Dynamics Discretization and Stability](#dynamics-discretization-and-stability)
-* [Collinear Points](#collinear-points)
+* [Lecture 3: Optimization Pt. 1](#lecture-3-optimization-pt-1)
 * [8 Puzzle](#8-puzzle)
 * [Kd-Trees](#kd-trees)
 * [WordNet](#wordnet)
@@ -17,19 +17,53 @@
 
 ## Dynamics Review
 ## Dynamics Discretization and Stability
-To Transform from continuity to discretization, some methods are following:
-### Forward Euler(Emplicit): add energy.
-### Backward Euler(Impicit): add dampping, use in game and physical simulation.
-### Points
+To Transform from continuity to discretization, some methods are following:<br/>
+### 1. Discret-time sim/dynamics  <br/>
 
+### 2. Stability of discrete-time system<br/>
+
+### 3. Forward/Backward Euler<br/>
+
+Forward Euler(Emplicit): add energy.  <br/>
+Backward Euler(Impicit): add dampping, use in game and physical simulation.  <br/>
 - Impilicit methods are often "more" stable than explicit counterparts
 - For forward simulation, solving implicit equation can be more expensive
 - In many "direct" traj opt methods, they're not any more expensive to use
 
-### Discretization Controls
-- focuse on discretization x(t) and u(t)
+### 4. Zero/First-order hold on controls <br/>
 
-## Collinear Points
+## Lecture 3: Optimization Pt. 1
+### 1. Notation
+
+giving $g(x):\mathbb{R}^{(m)}\rightarrow\mathbb{R}^{(n)}$
+
+$$\frac{ \partial g }{ \partial x }\in \mathbb{R}^{n \times m}$$
+
+because
+
+$$ g(x+\delta x)\approx \frac{ \partial g }{ \partial x }\delta x$$
+
+
+### 2. Root Finding
+- given $f(x)$, find $x*$ such that $f(x*)=0$ 
+
+-- example: equilibrium point of continuous-time dynamics
+
+- Closely realted fixef point such that $f(x*)=x*$
+
+-- example: equilibrium for disrete-time dynamics
+- Fixed point solution method
+- N ewton's method(better than the above)
+
+### 3. Minimization
+$min f(x),f: \mathbb{R}^{n} \rightarrow \mathbb{R}$
+
+convert it to root finding problem
+
+Newton is a local root-finding method. Will converge to the cloest min, max or saddle
+
+sufficient conditions
+
 ## 8 Puzzle
 ## Kd-Trees
 ## WordNet
