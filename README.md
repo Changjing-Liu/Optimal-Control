@@ -1,8 +1,8 @@
 # Optimal-Control
 > These are solution for the algorithm course of Princeton
 ## Table of Contents
-* [Dynamics Review](#dynamics-review)
-* [Dynamics Discretization and Stability](#dynamics-discretization-and-stability)
+* [Lecture 1: Dynamics Review](#lecture-1-dynamics-review)
+* [Lecture 2: Dynamics Discretization and Stability](#lecture-2-dynamics-discretization-and-stability)
 * [Lecture 3: Optimization Pt. 1](#lecture-3-optimization-pt-1)
 * [Lecture 4: Optimization Pt. 2](#lecture-4-optimization-pt-2)
 * [Kd-Trees](#kd-trees)
@@ -15,8 +15,8 @@
 <!-- * [License](#license) -->
 
 
-## Dynamics Review
-## Dynamics Discretization and Stability
+## Lecture 1: Dynamics Review
+## Lecture 2: Dynamics Discretization and Stability
 To Transform from continuity to discretization, some methods are following:<br/>
 ### 1. Discret-time sim/dynamics  <br/>
 
@@ -34,33 +34,57 @@ Backward Euler(Impicit): add dampping, use in game and physical simulation.  <br
 
 ## Lecture 3: Optimization Pt. 1
 ### 1. Notation
+- Given $f(x):\mathbb{R}^2\rightarrow\mathbb{R}$
+$$\frac{\partial{f}}{\partial{x}}\in\mathbb{R}^{1\times n}$$ is a row vector
 
-giving $g(x):\mathbb{R}^{(m)}\rightarrow\mathbb{R}^{(n)}$
+Giving $g(x):\mathbb{R}^{m}\rightarrow\mathbb{R}^{n}$
 
 $$\frac{ \partial g }{ \partial x }\in \mathbb{R}^{n \times m}$$
 
 because
 
-$$ g(x+\delta x)\approx \frac{ \partial g }{ \partial x }\delta x$$
+$$ g(x+\Delta x)\approx \frac{ \partial g }{ \partial x }\Delta x$$
 
+We will also define:
+
+$$\nabla f(x)=(\frac{\partial{f}}{\partial{x}})^T\in\mathbb{R}^{n \times 1}$$
+
+$$\nabla^2f(x) = \frac{\partial}{\partial{x}}(\nabla f(x))=\frac{\partial^22{f}}{\partial{x}^2}\in\mathbb{R}^{m \times n}$$
 
 ### 2. Root Finding
 - given $f(x)$, find $x*$ such that $f(x*)=0$ 
 
--- example: equilibrium point of continuous-time dynamics
+- - example: equilibrium point of continuous-time dynamics
 
 - Closely realted fixef point such that $f(x*)=x*$
 
--- example: equilibrium for disrete-time dynamics
+- - example: equilibrium for disrete-time dynamics
 - Fixed point solution method
-- N ewton's method(better than the above)
 
+Newton's method(better than the above)
+- Fit a linear appr0ximation to $f(x)$:
+$$f(x+\Delta{x})\approx f(x)+\frac{\partial{f}}{\partial{x}}\Delta{x}$$
+- Set approximation to zero and solve for $\Delta x$:
+$$f(x)+\frac{\partial{f}}{\partial{x}}\Delta{x}=0 \qquad \Longrightarrow \qquad \Delta{x}=-(\frac{\partial{f}}{\partial{x}})^{-1}f(x)$$
+- Apply correction:
+$$x \leftarrow x+\Delta{x}$$
+- Repeat until convergence
+
+Take-Away Message
+
+- Quadratic convergence
+- Can achieve machine precision
+- Most expensive part: solving linear system
+- Can impreove complexity by taking advantage of preblem structure
 ### 3. Minimization
-$min f(x),f: \mathbb{R}^{n} \rightarrow \mathbb{R}$
+
+$$ \min_{x} f(x),\qquad f: \mathbb{R}^{n} \rightarrow \mathbb{R} $$
 
 convert it to root finding problem
 
-Newton is a local root-finding method. Will converge to the cloest min, max or saddle
+Take Away Message:
+
+- Newton is a local root-finding method. Will converge to the Cloest Fined point to the initial guess (min, max or saddle)
 
 sufficient conditions
 
