@@ -4,7 +4,7 @@
 * [Dynamics Review](#dynamics-review)
 * [Dynamics Discretization and Stability](#dynamics-discretization-and-stability)
 * [Lecture 3: Optimization Pt. 1](#lecture-3-optimization-pt-1)
-* [8 Puzzle](#8-puzzle)
+* [Lecture 4: Optimization Pt. 2](#lecture-4-optimization-pt-2)
 * [Kd-Trees](#kd-trees)
 * [WordNet](#wordnet)
 * [Seam Carving](#seam-carving)
@@ -65,9 +65,121 @@ Newton is a local root-finding method. Will converge to the cloest min, max or s
 sufficient conditions
 
 ### 4. Regularization
-fix the decent, go downhill
+use some tricks to fix the decent, and go downhill
 
-## 8 Puzzle
+## Lecture 4: Optimization Pt. 2
+### 1. Line Search
+Genernal intuition
+- Often $\Delta{X}$ step from Newton is too big and overshoots the minimization
+- To fix this check ${f(x+\Delta{x})}$ and "backtrack" until we get a "good" reduction
+- Many stratagics exist
+- A simplest effective one is "Armijo rule"
+- Make sure step agrees with linearization within some tolerance.
+
+Take Away Messages
+
+- Nweton with simple, cheap modifications(" globalization strategies") is extremely effetive at finding local minima.
+
+### 2. Constrained Minimization
+
+#### 2.1 equality constraints
+First-Order Necessary Conditions
+$$\min_{x} \quad f(x)$$
+$${s.t.\quad c(x)=0}$$
+
+1) Need ${\nabla f(x)=0}$ in free directions
+2) Need $c(x)=0$
+![image](https://user-images.githubusercontent.com/43432899/197389536-3ada9b19-c901-4ab3-808e-61c379cd3376.png)
+
+
+* Any non-zero component of ${\nabla f}$ must be in normal to the constraints surface/manifold
+${\nabla{f}+ \lambda \nabla{c}=0}$ for some ${\lambda \in \mathbb{R}}$, where ${\lambda}$ is "Lagrange multipliter"/"Dual variable"
+
+In genral:
+$$\frac{\partial{f}}{\partial{x}}+\lambda^{T} \frac{\partial{c}}{\partial{x}} = 0,\lambda \in \mathbb{R}^{M}$$
+
+- Based on this gradient condition, we define:
+$L(x,\lambda)=f(x)+\lambda^{T}c(x)$, where ${L}$ denotes the "Lagrangian"
+
+- Such that:
+$$\nabla_{x}L(x,\lambda)=\nabla{f}+(\frac{\partial{c}}{\partial{x}})^T\lambda=0$$
+$$\nabla_{\lambda}L(x,\lambda)=c(x)=0$$
+
+We can solve this with Newton:
+$$\nabla_x L(x+\delta x,\lambda +\delta\lambda)\approx\nabla_xL(x,\lambda)+\frac{\partial^{2}L}{\partial{x}^2}+\frac{\partial*2{L}}{\partial{x}\partial{\lambda}}\Delta\lambda=0$$
+
+$$\nabla_\lambda L(x+\delta x,\lambda)\approx c(x)+\frac{\partial{c}}{\partial{x}}\Delta{x}=0$$
+
+Gauss-Newton Method:
+
+$$\frac{\partial^2{L}}{\partial{x^2}} = \nabla^2f + \frac{\partial{}}{\partial{x}}[(\frac{\partial{c}}{\partial{x}})^T\lambda]$$
+
+- We often drop the second-order "constraint " term for its expensive to compute
+- Called "gauss-newton"
+- Slightly slower converagence than full newton(more itterations) but much cheaper per itteration
+
+Take away message:
+-May still need to regularize $\frac{\partial^2{L}}{\partial{x^2}}$ in Newton, even if $\nabla^2{f}>0$
+-Gauss-Newton is often used in practice
+
+#### 2.2 Inequality constraints
+$$\min_{x} \quad f(x)$$
+$$s.t. c(x) \quad \geq 0$$
+-We'll just look at inequalities for now
+- In general, these methods for now with the privious ones for mixed equility/inequality constraints
+
+First-Order Necessary Conditions:
+1) $\nabla f = 0 $ in the free directions
+2) $c(x) \geq 0$
+
+KKT Conditions:
+$$\nabla{f}-(\frac{\partial{c}}{\partial{x}})^T\lambda=0\qquad stationarity$$
+$$c(x) \geq 0 \qquad primal \quad feasibility$$
+$$\lambda \geq 0 \qquad dual \quad fesibility$$
+$$\lambda^{T}c(x) = 0 \qquad complementarity$$
+
+Intuition:
+- If constraint is "active" $\lambda > 0$ (same as equality case)
+- If constraint is "inactive" $\lambda = 0$ (same as unconstrainted)
+- Complementerity encodes "on/off" switching
+
+Algorithms:
+
+- Mush harder than equality case
+- can't directly apply Newton to KKT
+- Many options will trade offs
+
+Active-Set:
+- Have some way of guessing active/inactive constraints
+- Just solve equality-constrainted problems
+- Very fast if you can guess well
+- Very bad otherwise
+
+Barrier/Interier-POINT
+
+- Replace inequalities with "barrier function" in objective that goes to infinity at constraint boundary.
+$${min \quad f(x)}$$
+$$s.t.\quad c_i(x)\geq 0$$
+convert the above to the fllowing：
+$$min_{x} f(x)-\sum^{m}_{i=1}\frac{1}{p}log(c_i(x))$$
+
+- Gold standard for small~medium convex problems
+- Requies lots of tricks/hacks for non-convex problems
+
+Penalty
+- Replace inequality with objective term to pernalize violations
+$${min \quad f(x)}$$
+$$s.t.\quad c_i(x)\geq 0$$
+convert the above to the fllowing：
+$$min f(x)+\frac{p}{2}[min(0,C(x))]^{2}$$
+
+- Easy to implement
+- Has issues with numerical ill-conditioning
+- Difficult to achieve high accuracy
+
+
+
+
 ## Kd-Trees
 ## WordNet
 ## Seam Carving
