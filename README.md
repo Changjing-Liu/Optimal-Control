@@ -5,7 +5,7 @@
 * [Lecture 2: Dynamics Discretization and Stability](#lecture-2-dynamics-discretization-and-stability)
 * [Lecture 3: Optimization Pt. 1](#lecture-3-optimization-pt-1)
 * [Lecture 4: Optimization Pt. 2](#lecture-4-optimization-pt-2)
-* [Kd-Trees](#kd-trees)
+* [Lecture 5: Optimization Pt. 3](#lecture-5-optimization-pt-3)
 * [WordNet](#wordnet)
 * [Seam Carving](#seam-carving)
 * [Baseball Elimination](#baseball-elimination)
@@ -204,7 +204,15 @@ $$min f(x)+\frac{p}{2}[min(0,C(x))]^{2}$$
 
 
 
-## Kd-Trees
+## Lecture 5: Optimization Pt. 3
+### Penalty Method
+- Replace inequalities with objective term that penalizes violations:
+$$\min_{x} \quad f(x)$$
+$$s.t. \quad c(x)\geq0$$
+### 1 Augmented Lagrangian
+### 2 Quadratic Programs
+### 3 Regularization
+
 ## WordNet
 ## Seam Carving
 ## Baseball Elimination
