@@ -280,6 +280,7 @@ $$s.t.\quad d(x)= 0$$
 turn into:
 $$L(x,\lambda,\mu)=f(x)-\lambda^{T}c(x)+\mu^{T}d(x)$$
 - Lot's of options for merit function:
+- 
 ![image](https://user-images.githubusercontent.com/43432899/198869024-2dc90962-8e9a-4db3-8c6a-a0c8ced0b130.png)
 
 Take away message:
