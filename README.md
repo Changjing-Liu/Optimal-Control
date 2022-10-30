@@ -209,10 +209,83 @@ $$min f(x)+\frac{p}{2}[min(0,C(x))]^{2}$$
 - Replace inequalities with objective term that penalizes violations:
 $$\min_{x} \quad f(x)$$
 $$s.t. \quad c(x)\geq0$$
+The above can be rewritten:
+$$\min_{x} \quad f(x)+\frac{p}{2}[min(0,c(x))]^2$$
+- Easy to implement
+- Large penalties->ill-conditioning
+- Difficult to achieve high accrracy
 ### 1 Augmented Lagrangian
-### 2 Quadratic Programs
-### 3 Regularization
+- Add Lagrange nultiplter estimate to penalty method:
+$$\min_{x} L_p(x,\hat{\lambda})=f(x)-\hat{\lambda}^{T}c(x)+\frac{P}{2}[min(0,c(x))]^2$$
+-Update $\hat{\lambda}$ by "off loading" penalty into multiplier at each iteration
+- Repeat until convergence
+1) $\min_{x} \quad L_p(x,\hat{\lambda})$
+2) $\hat{\lambda}\leftarrow max(0,\hat{\lambda}-pc(x))$
+3) $p \leftarrow \alpha p \quad (optinal)$
 
+- Fixed ill-conditioning of penalty method
+- Convergencs fast(super linear)
+- Works well on non-linear problems
+
+### 2 Quadratic Programs
+$$\min_{x} \frac{1}{2}X^{T}QX+q*Tx,\quad Q>0$$
+$$s.t. \quad Ax\leq b$$
+$$s.t. \quad Cx\leq d$$
+- Very useful in control
+- Can be solved very fast
+
+### 3 Regularization+duality
+$$\min_{x} \quad f(x)$$
+$$s.t. \quad c(x)=0$$
+- We might line to trun this into :
+$$\min_{x}\quad f(x)+P_{\infty}(c(x)), P_{\infty}(c(x))\geq 0$$
+- Practically terrible, but we can get the same effect by solving:
+$$\min_{x} \quad \max_{\lambda} \quad f(x)+\lambda^Tc(x)$$
+- Whatever $c(x)\neq 0$, inner problem blows up
+- Similarly for inequalities!
+$$\min_{x} \quad f(x)$$
+$$s.t. \quad c(x) \geq 0$$
+trun this into:
+$$\min_{x}\quad f(x)+P_{\infty}(c(x)), P_{\infty}^{+}(c(x))\geq 0$$
+we can get the same effect by solving:
+$$\min_{x} \quad \max_{\lambda\geq 0} \quad L(x,\lambda)=f(x)+\lambda^Tc(x)$$
+- Asside for convex problems, we can switch the order of min/max and get the same answer(duality). Not true ub general.
+- Interpretation: KKT conditions define a sddle point in $(x,\lambda)$
+- KKT system should have $dim(x)$ positive eigenvalues and $dim(\lambda)$ negative eigenvalue at an optimum. Called "Quasi-definite"
+
+When rugularizing a KKT system, the lower-right block should be negative:
+![image](https://user-images.githubusercontent.com/43432899/198868643-341167ac-c0a8-4844-adb8-29e359dba958.png)
+* Exapmle:
+-still heve overshoot -> need line search
+
+### Merit Function
+- How do we do a lone search on a root-finding problem?
+
+find $x^{\*} \quad s.t. \quad c(x^{\*})=0$
+- Define a scalar "merit function" $P(x)$ that measures distance from a solution
+- standard Choices!
+$$P(x)=\frac{1}{2}c(x)^{T}c(x)=\frac{1}{2}||c(x)||^2_2$$
+$$P(x)=\Vert c(x)\Vert_1 \quad (any \quad norm \quad works)$$
+
+- Now just do Armijo on $P(x)$
+$$\alpha=1$$
+$$while\quad P(x+\Delta x)>P(x)+c\alpha\nabla P(x)^T\Delta{x}$$
+$$\qquad \alpha \leftarrow c\alpha$$
+$$end$$
+$$\qquad x \leftarrow x+ \alpha \Delta x$$$
+- How about constrained minimization?
+$$min_{x}\quad f(x)$$
+$$s.t.\quad c(x)\geq 0$$
+$$s.t.\quad d(x)= 0$$
+turn into:
+$$L(x,\lambda,\mu)=f(x)-\lambda^{T}c(x)+\mu^{T}d(x)$$
+- Lot's of options for merit function:
+![image](https://user-images.githubusercontent.com/43432899/198869024-2dc90962-8e9a-4db3-8c6a-a0c8ced0b130.png)
+
+Take away message:
+- $P(x)$ based on KKT residual is expensive
+- Exessively large constraint penalty can cause problems
+- AL methods come with a merit fuction for free
 ## WordNet
 ## Seam Carving
 ## Baseball Elimination
